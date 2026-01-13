@@ -1,8 +1,30 @@
+import { useState } from "react";
+import { Check, X, Trash } from "lucide-react";
+
 function App() {
-    const todo = [
+    const [	todos, setTodos ] = useState([
         {name: 'Apprendre React', done: false},
-        {name: 'Installer Tailwind', done: true}
-      ];
+        {name: 'Installer Tailwind', done: true},
+        {name: 'Créer une Todo App', done: false},
+        {name: 'Publier sur GitHub', done: false},
+        {name: 'Partager avec des amis', done: true},
+      ]);
+
+    const toggleTodo = (index: number) => {
+      const newTodos = [...todos];
+      newTodos[index].done = !newTodos[index].done;
+      setTodos(newTodos);
+    }
+
+    const addTodo = (name: string) => {
+      const newTodos = [...todos, {name, done: false}];
+      setTodos(newTodos);
+    }
+
+    const deleteTodo = (index: number) => {
+      const newTodos = todos.filter((_, i) => i !== index);
+      setTodos(newTodos);
+    }
 
   return (
     <div className="min-h-screen w-screen flex justify-center bg-base-300">
@@ -21,14 +43,23 @@ function App() {
               placeholder="Ajouter une tâche..."
               className="input input-bordered w-full"
             />
-            <button className="btn btn-primary">
+            <button
+              onClick={() => {
+                const input = document.querySelector('input');
+                if (input && input.value.trim() !== '') {
+                  addTodo(input.value.trim());
+                  input.value = '';
+                }
+              }}
+              className="btn btn-primary"
+            >
               Ajouter
             </button>
           </div>
 
           {/* Liste avec map */}
           <ul className="space-y-2">
-            {todo.map((task, index) => (
+            {todos.map((task, index) => (
               <li
                 key={index}
                 className={`flex items-center justify-between p-3 rounded-lg bg-base-200 ${
@@ -36,11 +67,29 @@ function App() {
                 }`}
               >
                 <span>{task.name}</span>
-                {task.done ? (
-                  <button className="btn btn-sm btn-error">✕</button>
-                ) : (
-                  <button className="btn btn-sm btn-success">✔</button>
-                )}
+                <span>
+                  {task.done ? (
+                    <button
+                      className="btn btn-sm btn-error"
+                      onClick={() => toggleTodo(index)}
+                    >
+                      <X />
+                    </button>
+                  ) : (
+                    <button
+                      className="btn btn-sm btn-success"
+                      onClick={() => toggleTodo(index)}
+                    >
+                      <Check />
+                    </button>
+                  )}
+                  <button
+                    className="btn btn-sm btn-outline btn-warning ml-2"
+                    onClick={() => deleteTodo(index)}
+                  >
+                    <Trash />
+                  </button>
+                </span>
               </li>
             ))}
           </ul>
