@@ -1,73 +1,112 @@
-# React + TypeScript + Vite
+# 📝 Todo App Moderne
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Une application **Todo** développée en **React + TypeScript**, conçue comme **premier projet d’apprentissage front-end**.  
+Elle permet de gérer une liste de tâches de manière simple, fluide et intuitive.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🎯 Objectifs du projet
 
-## React Compiler
+Ce projet a pour but de :
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Comprendre les bases de **React**
+- Utiliser **TypeScript** dans une application front-end
+- Manipuler l’**état (state)** avec `useState`
+- Mettre en place une interface moderne et responsive
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🖼️ Aperçu de l’interface
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Fonctionnalités visibles :
+- Carte centrale avec design moderne
+- Champ d’ajout de tâche
+- Liste de tâches avec état (faite / non faite)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## ⚙️ Fonctionnalités
+
+- ➕ Ajouter une tâche
+- ✅ Marquer une tâche comme terminée
+- ❌ Supprimer une tâche
+- 🔄 Mise à jour instantanée de l’interface (sans rechargement)
+
+---
+
+## 🧠 Concepts React & TypeScript abordés
+
+- TSX
+- `useState`
+- Events (`onChange`, `onSubmit`, `onClick`)
+- Manipulation de tableaux (`map`, `filter`)
+
+---
+
+## 🚀 Installation et lancement
+
+### Prérequis
+- Node.js (version récente recommandée)
+- npm ou yarn
+
+### Installation
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Lancer l’application
+```bash
+npm run dev
 ```
+
+Puis ouvrir :
+**http://localhost:5173**
+
+## 📱 Responsive Design
+
+L’application est conçue pour être **entièrement responsive** :
+
+- Interface centrée et lisible sur desktop
+- Adaptation automatique sur tablette et mobile
+- Composants flexibles qui s’ajustent à la taille de l’écran
+- Expérience utilisateur fluide sur tous les supports
+
+---
+
+## 🔮 Améliorations possibles
+
+Ce projet peut être enrichi progressivement avec les fonctionnalités suivantes :
+
+- 🔍 Filtres de tâches : *Toutes / À faire / Terminées*
+- 💾 Persistance des données avec `localStorage`
+- 🌙 Mode sombre / Mode claire
+- 🎨 Animations et transitions UI
+- 🧩 Composants plus génériques et réutilisables
+- 🖱️ Drag & Drop pour réorganiser les tâches
+
+---
+
+## 🏁 Conclusion
+
+Cette Todo App représente un **premier projet complet et concret** en React + TypeScript.
+
+Ce projet marque le **point de départ** d’un parcours progressif vers des applications plus avancées.
+
+---
+
+## 🔗 Démo en ligne
+
+Une version de démonstration de l’application est disponible ici :
+
+👉 **https://demo-link.com**
+
+Cette démo permet de :
+- Tester l’ajout, la validation et la suppression de tâches
+- Observer le comportement responsive de l’interface
+- Découvrir l’application sans installation locale
+
+---
+
+👨‍💻 Projet réalisé dans un cadre d’apprentissage et de montée en compétences en front-end.
+
+---
