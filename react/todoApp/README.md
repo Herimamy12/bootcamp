@@ -98,12 +98,20 @@ Ce projet marque le **point de départ** d’un parcours progressif vers des app
 
 Une version de démonstration de l’application est disponible ici :
 
-👉 **https://demo-link.com**
+👉 **https://todo-delta-gold-51.vercel.app/**
 
 Cette démo permet de :
 - Tester l’ajout, la validation et la suppression de tâches
 - Observer le comportement responsive de l’interface
 - Découvrir l’application sans installation locale
+
+---
+
+## 🖼️ Aperçu de l’application
+
+Voici un aperçu visuel de l’interface de la Todo App moderne :
+
+![Aperçu de la Todo App](../maquette/todo.png)
 
 ---
 
