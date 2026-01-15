@@ -21,4 +21,4 @@ npm run dev
 
 ![Galerie d’images](../maquette/gallery.png)
 
-- [Voir la démo en ligne](https://demo-link.com)
+- [Voir la démo en ligne](https://gallery-gamma-weld-51.vercel.app/)
