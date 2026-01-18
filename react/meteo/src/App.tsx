@@ -33,13 +33,11 @@ function App() {
       {/* Formulaire de recherche */}
       <WeatherForm onWeatherFetched={setWeatherData} onLoadingChange={setLoading} />
       {/* Affichage de la météo si disponible */}
-      {loading ? (
-        <Loader />
-      ) : weatherData ? (
-        <WeatherCard data={weatherData} />
-      ) : (
-        <p className="mt-6 text-gray-600">Entrez une ville pour obtenir la météo.</p>
-      )}
+      {
+        loading ? (
+          <Loader />
+        ) : weatherData && <WeatherCard data={weatherData} />
+      }
     </div>
   )
 }
