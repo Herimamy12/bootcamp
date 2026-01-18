@@ -5,9 +5,10 @@ import type { WeatherData } from '../api/weatherApi';
 
 interface WeatherFormProps {
   onWeatherFetched: (data: WeatherData) => void;
+  onLoadingChange: (loading: boolean) => void;
 }
 
-export function WeatherForm({ onWeatherFetched }: WeatherFormProps) {
+export function WeatherForm({ onWeatherFetched, onLoadingChange }: WeatherFormProps) {
   const [city, setCity] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -20,6 +21,7 @@ export function WeatherForm({ onWeatherFetched }: WeatherFormProps) {
     }
 
     setLoading(true);
+    onLoadingChange(true);
     setError(null);
 
     try {
@@ -33,6 +35,7 @@ export function WeatherForm({ onWeatherFetched }: WeatherFormProps) {
         }
     } finally {
         setLoading(false);
+        onLoadingChange(false);
     }
   };
 
