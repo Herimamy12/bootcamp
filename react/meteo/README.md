@@ -27,4 +27,4 @@ La météo s'affiche dans la carte
 
 ![Galerie d’images](../maquette/meteo.png)
 
-- [Voir la démo en ligne](https://meteo.vercel.app/)
+- [Voir la démo en ligne](https://bootcamp-bice.vercel.app/)
