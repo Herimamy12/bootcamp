@@ -3,6 +3,7 @@ import type { NotesAction, NotesState } from "./notes.types";
 export const initialState: NotesState = {
   notes: [],
   search: "",
+  editingNote: null,
 };
 
 export const notesReducer = (

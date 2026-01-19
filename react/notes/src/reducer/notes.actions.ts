@@ -20,3 +20,8 @@ export const setSearch = (search: string): NotesAction => ({
   type: 'SET_SEARCH',
   payload: search,
 });
+
+export const setEditingNote = (note: Note | null): NotesAction => ({
+  type: 'SET_EDITING_NOTE',
+  payload: note,
+});

@@ -1,9 +1,7 @@
-function App() {
-  return (
-    <div>
-      <h1 className="flex justify-center items-center">Hello World!</h1>
-    </div>
-  )
+import { Home } from "./pages/Home"
+
+function App(){
+  return <Home />
 }
 
 export default App

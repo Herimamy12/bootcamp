@@ -1,14 +1,17 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
 import { useNotes } from "../hooks/useNotes";
-import { addNote } from "../reducer/notes.actions";
+import { addNote, updateNote } from "../reducer/notes.actions";
+import type { Note } from "../types/note";
 
 export const NoteForm = () => {
-  const { dispatch } = useNotes();
+  const {state, dispatch} = useNotes();
 
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [tags, setTags] = useState("");
+  const [title, setTitle] = useState(state.editingNote?.title || "");
+  const [content, setContent] = useState(state.editingNote?.content || "");
+  const [tags, setTags] = useState(state.editingNote?.tags.join(", ") || "");
+  const [editingNote, setEditingNote] = useState<Note | null>(null);
+
 
   const handleSubmit = (e: FormEvent) => {
     if (!title || !content) {
@@ -16,14 +19,24 @@ export const NoteForm = () => {
         return;
     }
     e.preventDefault();
-    const newNote = {
-      id: Date.now().toString(),
-      title,
-      content,
-      tags: tags.split(",").map(tag => tag.trim()),
-      createdAt: new Date(),
-    };
-    dispatch(addNote(newNote));
+    if (editingNote) {
+        dispatch(updateNote({
+            ...editingNote,
+            title,
+            content,
+            tags: tags.split(",").map(tag => tag.trim()),
+        }));
+        setEditingNote(null);
+    } else {
+        const newNote: Note = {
+            id: crypto.randomUUID(),
+            title,
+            content,
+            tags: tags.split(",").map(tag => tag.trim()),
+            createdAt: new Date(),
+        };
+        dispatch(addNote(newNote));
+    }
     setTitle("");
     setContent("");
     setTags("");
