@@ -29,9 +29,13 @@ export const Navbar = () => {
           Notes
         </NavLink>
 
-        <NavLink to="/profile/1" className={linkClass}>
+        <NavLink to="/profile" className={linkClass}>
           Profile
         </NavLink>
+
+        {/* <NavLink to="/profile/1" className={linkClass}>
+          Profile
+        </NavLink> */}
 
         <NavLink to="/settings" className={linkClass}>
           Settings

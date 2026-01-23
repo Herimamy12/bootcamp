@@ -1,4 +1,4 @@
-export function Home() {
+function Home() {
   return (
     <div className="p-8">
       <div className="card bg-base-100 shadow-xl max-w-xl mx-auto">
@@ -13,3 +13,5 @@ export function Home() {
     </div>
   );
 }
+
+export default Home;

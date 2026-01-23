@@ -1,4 +1,4 @@
-export function NotFound() {
+function NotFound() {
   return (
     <div className="min-h-screen flex justify-center items-center">
       <div className="text-center">
@@ -8,3 +8,5 @@ export function NotFound() {
     </div>
   );
 }
+
+export default NotFound;
