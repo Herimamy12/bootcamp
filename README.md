@@ -77,3 +77,14 @@ Application **React Single Page Application** mettant en œuvre une navigation a
 - Error Boundaries
 ## Lien vers le projet
 - [Voir le projet](https://spa-six-kohl.vercel.app/)
+
+# 📘 Projet 7 — Miniteur rapide avec Monkey Coders
+Application **React** de miniteur.
+## 🚀 Stack
+- React + TypeScript
+- Tailwind CSS
+- daisyUI
+## ✨ Fonctionnalités
+- Miniteur avec fonctionnalités de démarrage, pause et réinitialisation
+## Lien vers le projet
+- [Voir le projet](https://miniteur-phi.vercel.app/)
