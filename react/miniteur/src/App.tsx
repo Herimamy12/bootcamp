@@ -4,6 +4,8 @@ function App() {
   const [started, setStarted] = useState(false);
   const [seconds, setSeconds] = useState(0);
   const [minutes, setMinutes] = useState(0);
+  const [hours, setHours] = useState(0);
+  const [days, setDays] = useState(0);
 
   useEffect(() => {
     let interval: number;
@@ -11,7 +13,19 @@ function App() {
       interval = setInterval(() => {
         setSeconds((prevSeconds) => {
           if (prevSeconds === 59) {
-            setMinutes((prevMinutes) => prevMinutes + 1);
+            setMinutes((prevMinutes) => {
+              if (prevMinutes === 59) {
+                setHours((prevHours) => {
+                  if (prevHours === 23) {
+                    setDays((prevDays) => prevDays + 1);
+                    return 0;
+                  }
+                  return prevHours + 1;
+                });
+                return 0;
+              }
+              return prevMinutes + 1;
+            });
             return 0;
           }
           return prevSeconds + 1;
@@ -28,6 +42,8 @@ function App() {
   const reset = () => {
     setSeconds(0);
     setMinutes(0);
+    setHours(0);
+    setDays(0);
     setStarted(false);
   };
 
@@ -43,7 +59,13 @@ function App() {
           <h1 className="card-title">Miniteur</h1>
 
           <div className="card bg-base-100 items-center">
+            {days > 0 && (
+              <div className="card-body text-2xl font-mono">
+                {days} {days === 1 ? "day" : "days"}
+              </div>
+            )}
             <div className="card-body text-2xl font-mono">
+              {hours.toString().padStart(2, "0")}:
               {minutes.toString().padStart(2, "0")}:
               {seconds.toString().padStart(2, "0")}
             </div>
