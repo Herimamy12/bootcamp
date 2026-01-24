@@ -87,4 +87,4 @@ Application **React** de miniteur.
 ## ✨ Fonctionnalités
 - Miniteur avec fonctionnalités de démarrage, pause et réinitialisation
 ## Lien vers le projet
-- [Voir le projet](https://miniteur-phi.vercel.app/)
+- [Voir le projet](https://miniteur.vercel.app/)

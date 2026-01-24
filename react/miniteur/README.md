@@ -1,5 +1,5 @@
 # Miniteur
 
 ## Links
-- [Live Demo](https://nherimam.github.io/bootcamp/react/miniteur/)
+- [Live Demo](https://miniteur.vercel.app/)
 - [Overview image](../maquette/miniteur.png)
