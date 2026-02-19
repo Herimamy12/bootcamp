@@ -1,7 +1,4 @@
-# my gitignore file for the backend of my todo app
-# Ignore node_modules
-node_modules
-# Ignore logs
+# Logs
 logs
 *.log
 npm-debug.log*
@@ -9,15 +6,13 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
-# Ignore dist folder
+
+node_modules
 dist
-# Ignore .env files
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-# Ignore editor directories and files
+dist-ssr
+*.local
+
+# Editor directories and files
 .vscode/*
 !.vscode/extensions.json
 .idea
@@ -27,7 +22,3 @@ dist
 *.njsproj
 *.sln
 *.sw?
-# Ignore coverage folder
-coverage
-# Ignore build folder
-build
