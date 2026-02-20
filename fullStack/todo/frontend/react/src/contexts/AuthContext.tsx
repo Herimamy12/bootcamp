@@ -59,17 +59,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       localStorage.setItem("authToken", data.token);
       localStorage.setItem("authUser", JSON.stringify(data.user));
 
-      // Mocking login response for testing purposes
-      // const data = {
-      //   token: "fake-jwt-token",
-      //   user: { id: "1", email: "john@example.com", name: "John Doe" },
-      // };
-
-      // setToken(data.token);
-      // setUser(data.user);
-
-      // localStorage.setItem("authToken", data.token);
-      // localStorage.setItem("authUser", JSON.stringify(data.user));
     } catch (error) {
       console.error("Login error:", error);
       throw error;
