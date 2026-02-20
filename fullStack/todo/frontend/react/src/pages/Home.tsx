@@ -19,18 +19,25 @@ export const HomePage = () => {
               Bienvenue, {user?.name} ! Gérez vos tâches efficacement.
             </p>
             <div className="flex gap-4">
-              <button className="btn btn-accent rounded-none md:btn-lg">
+              <Link
+                to="/todolist"
+                className="btn btn-accent rounded-none md:btn-lg"
+              >
                 Voir mes tâches
-              </button>
-              <button className="btn btn-outline rounded-none md:btn-lg">
+              </Link>
+              <Link
+                to="/todolist?create=true"
+                className="btn btn-outline rounded-none md:btn-lg"
+              >
                 Créer une tâche
-              </button>
+              </Link>
             </div>
           </>
         ) : (
           <>
             <p className="text-lg mt-4 text-error max-w-7xl text-center mx-10">
-              Votre application personnelle de gestion des tâches. Connectez-vous ou inscrivez-vous pour commencer !
+              Votre application personnelle de gestion des tâches.
+              Connectez-vous ou inscrivez-vous pour commencer !
             </p>
             <div className="flex gap-4">
               <Link
