@@ -70,7 +70,11 @@ docker-down: ## Arrête et supprime les conteneurs
 docker-logs: ## Affiche les logs des conteneurs (Ctrl-C pour quitter)
 	docker compose logs -f
 
-docker-restart: docker-down docker-up ## Redémarre tous les conteneurs
+docker-restart: docker-clean docker-up ## Redémarre tous les conteneurs
+
+docker-clean: docker-down ## Arrête les conteneurs et supprime les volumes associés
+	docker compose down -v
+	docker system prune -af
 
 ##@ Nettoyage
 
@@ -81,3 +85,12 @@ clean-frontend: ## Supprime node_modules et dist du frontend
 
 clean-backend: ## Supprime node_modules du backend
 	rm -rf $(BACKEND_DIR)/node_modules
+
+clean-volumes: ## Supprime les volumes Docker (attention, données perdues)
+	docker volume prune -f
+	sudo rm -rf ./data
+
+fclean: docker-clean clean-volumes ## Nettoie tout, y compris les volumes Docker
+
+##@ Relances tout
+re: fclean docker-up
