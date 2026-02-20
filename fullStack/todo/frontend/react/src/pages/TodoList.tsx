@@ -1,17 +1,42 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 import { Navbar } from "../components/Navbar";
 import { CreateTodoModal } from "../components/CreateTodoModal";
 import { LayoutList, Circle, CheckCircle, Trash2, Plus } from "lucide-react";
 
+interface Todo {
+  id: string;
+  title: string;
+  completed: boolean;
+  userId: string;
+}
+
 export const TodoList = () => {
-  const [todos, setTodos] = useState([
-    { id: 1, title: "Buy groceries", completed: false },
-    { id: 2, title: "Walk the dog", completed: true },
-    { id: 3, title: "Read a book", completed: false },
-  ]);
+  const { user } = useAuth();
+  const [todos, setTodos] = useState<Todo[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const fetchTodos = useCallback(async () => {
+    if (!user) return;
+    try {
+      const res = await fetch(`http://localhost:3000/api/todos/${user.id}`);
+      if (!res.ok) throw new Error("Erreur lors du chargement des tâches");
+      const data = await res.json();
+      setTodos(data);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Erreur serveur");
+    } finally {
+      setIsLoading(false);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    fetchTodos();
+  }, [fetchTodos]);
 
   useEffect(() => {
     if (searchParams.get("create") === "true") {
@@ -20,19 +45,49 @@ export const TodoList = () => {
     }
   }, [searchParams, setSearchParams]);
 
-  const addTodo = (title: string) => {
-    const newId = todos.length > 0 ? Math.max(...todos.map((t) => t.id)) + 1 : 1;
-    setTodos([...todos, { id: newId, title, completed: false }]);
+  const addTodo = async (title: string) => {
+    if (!user) return;
+    try {
+      const res = await fetch("http://localhost:3000/api/todos", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title, userId: user.id }),
+      });
+      if (!res.ok) throw new Error("Erreur lors de la création");
+      const newTodo = await res.json();
+      setTodos([...todos, newTodo]);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Erreur serveur");
+    }
   };
 
-  const toggleTodo = (id: number) => {
-    setTodos(
-      todos.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t)),
-    );
+  const toggleTodo = async (id: string) => {
+    const todo = todos.find((t) => t.id === id);
+    if (!todo) return;
+    try {
+      const res = await fetch(`http://localhost:3000/api/todos/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ completed: !todo.completed }),
+      });
+      if (!res.ok) throw new Error("Erreur lors de la mise à jour");
+      const updated = await res.json();
+      setTodos(todos.map((t) => (t.id === id ? updated : t)));
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Erreur serveur");
+    }
   };
 
-  const deleteTodo = (id: number) => {
-    setTodos(todos.filter((t) => t.id !== id));
+  const deleteTodo = async (id: string) => {
+    try {
+      const res = await fetch(`http://localhost:3000/api/todos/${id}`, {
+        method: "DELETE",
+      });
+      if (!res.ok) throw new Error("Erreur lors de la suppression");
+      setTodos(todos.filter((t) => t.id !== id));
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Erreur serveur");
+    }
   };
 
   return (
@@ -59,6 +114,16 @@ export const TodoList = () => {
             <p className="text-base-content/70 mb-6">
               {todos.filter((t) => !t.completed).length} tâche(s) restante(s)
             </p>
+            {error && (
+              <div className="alert alert-error mb-4">
+                <span>{error}</span>
+              </div>
+            )}
+            {isLoading ? (
+              <div className="flex justify-center py-8">
+                <span className="loading loading-spinner loading-lg text-accent"></span>
+              </div>
+            ) : (
             <ul className="space-y-3">
               {todos.map((todo) => (
                 <li
@@ -93,6 +158,7 @@ export const TodoList = () => {
                 </li>
               ))}
             </ul>
+            )}
           </div>
         </div>
       </div>
