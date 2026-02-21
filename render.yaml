@@ -63,7 +63,6 @@ services:
   # --------------------------------------------------------------------------
   - type: web
     name: todo-frontend
-    plan: static
     env: static
     rootDir: frontend/react
     buildCommand: npm ci && npm run build
