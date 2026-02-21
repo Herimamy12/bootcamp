@@ -1,0 +1,88 @@
+# =============================================================================
+# Render Blueprint - Deploiement de l'application Todo
+# =============================================================================
+#
+# Ce fichier definit l'infrastructure sur Render :
+#   1. Une base de donnees PostgreSQL managee
+#   2. Un Web Service pour le backend (Express + Prisma)
+#   3. Un Static Site pour le frontend (React + Vite)
+#
+# Utilisation :
+#   - Connecter le repo GitHub sur https://render.com
+#   - Render detecte automatiquement ce fichier et cree les services
+#   - Apres le premier deploiement, configurer VITE_API_URL et CORS_ORIGIN
+#
+# =============================================================================
+
+databases:
+  # --------------------------------------------------------------------------
+  # PostgreSQL - Base de donnees principale
+  # --------------------------------------------------------------------------
+  # Render cree automatiquement la base, l'utilisateur et le mot de passe.
+  # La variable DATABASE_URL est injectee dans le backend via fromDatabase.
+  # --------------------------------------------------------------------------
+  - name: todo-db
+    plan: free
+    databaseName: tododb
+    user: todouser
+
+services:
+  # --------------------------------------------------------------------------
+  # Backend - API Express.js (Web Service Docker)
+  # --------------------------------------------------------------------------
+  # Utilise le Dockerfile existant du backend.
+  # La commande de demarrage execute les migrations Prisma puis lance le serveur.
+  # --------------------------------------------------------------------------
+  - type: web
+    name: todo-backend
+    plan: free
+    env: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    healthCheckPath: /
+    envVars:
+      # Connexion a la base de donnees (injectee automatiquement par Render)
+      - key: DATABASE_URL
+        fromDatabase:
+          name: todo-db
+          property: connectionString
+      # Secret JWT genere automatiquement par Render (64 caracteres)
+      - key: JWT_SECRET
+        generateValue: true
+      # Origine autorisee pour CORS (a remplir apres le deploiement du frontend)
+      # Exemple : https://todo-frontend.onrender.com
+      - key: CORS_ORIGIN
+        sync: false
+
+  # --------------------------------------------------------------------------
+  # Frontend - Application React (Static Site)
+  # --------------------------------------------------------------------------
+  # Render build le projet avec Vite et sert les fichiers statiques.
+  # La regle de rewrite envoie toutes les routes vers index.html (SPA).
+  # --------------------------------------------------------------------------
+  - type: web
+    name: todo-frontend
+    plan: static
+    env: static
+    rootDir: frontend/react
+    buildCommand: npm ci && npm run build
+    staticPublishPath: ./dist
+    routes:
+      # Rewrite necessaire pour React Router (toutes les routes -> index.html)
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    headers:
+      # Pas de cache sur les pages HTML (pour que les mises a jour soient visibles)
+      - path: /*
+        name: Cache-Control
+        value: public, max-age=0, must-revalidate
+      # Cache long sur les assets (les noms contiennent un hash unique)
+      - path: /assets/*
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+    envVars:
+      # URL du backend API (a remplir apres le deploiement du backend)
+      # Exemple : https://todo-backend.onrender.com
+      - key: VITE_API_URL
+        sync: false

@@ -7,12 +7,19 @@ import { PrismaClient } from "./generated/prisma/client.ts";
 import jwt from "jsonwebtoken";
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });
 
-app.use(cors());
+// CORS : autorise l'origine configuree en production, ou toutes les origines en dev
+app.use(
+  cors(
+    process.env.CORS_ORIGIN
+      ? { origin: process.env.CORS_ORIGIN, credentials: true }
+      : undefined
+  )
+);
 app.use(express.json());
 
 app.get("/", (req, res) => {

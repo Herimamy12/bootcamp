@@ -4,6 +4,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { Navbar } from "../components/Navbar";
 import { CreateTodoModal } from "../components/CreateTodoModal";
 import { LayoutList, Circle, CheckCircle, Trash2, Plus } from "lucide-react";
+import { API_URL } from "../config/api";
 
 interface Todo {
   id: string;
@@ -23,7 +24,7 @@ export const TodoList = () => {
   const fetchTodos = useCallback(async () => {
     if (!user) return;
     try {
-      const res = await fetch(`http://localhost:3000/api/todos/${user.id}`);
+      const res = await fetch(`${API_URL}/api/todos/${user.id}`);
       if (!res.ok) throw new Error("Erreur lors du chargement des tâches");
       const data = await res.json();
       setTodos(data);
@@ -48,7 +49,7 @@ export const TodoList = () => {
   const addTodo = async (title: string) => {
     if (!user) return;
     try {
-      const res = await fetch("http://localhost:3000/api/todos", {
+      const res = await fetch(`${API_URL}/api/todos`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ title, userId: user.id }),
@@ -65,7 +66,7 @@ export const TodoList = () => {
     const todo = todos.find((t) => t.id === id);
     if (!todo) return;
     try {
-      const res = await fetch(`http://localhost:3000/api/todos/${id}`, {
+      const res = await fetch(`${API_URL}/api/todos/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ completed: !todo.completed }),
@@ -80,7 +81,7 @@ export const TodoList = () => {
 
   const deleteTodo = async (id: string) => {
     try {
-      const res = await fetch(`http://localhost:3000/api/todos/${id}`, {
+      const res = await fetch(`${API_URL}/api/todos/${id}`, {
         method: "DELETE",
       });
       if (!res.ok) throw new Error("Erreur lors de la suppression");
