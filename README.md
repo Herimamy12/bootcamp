@@ -88,3 +88,15 @@ Application **React** de miniteur.
 - Miniteur avec fonctionnalités de démarrage, pause et réinitialisation
 ## Lien vers le projet
 - [Voir le projet](https://miniteur.vercel.app/)
+
+# 📘 Projet 8 — Todo avec backend Express
+Application **React** de gestion de tâches avec backend Express.js et base de données PostgreSQL.
+## 🚀 Stack
+- React + TypeScript
+- Express.js + Prisma
+- PostgreSQL (sur Render)
+## ✨ Fonctionnalités
+- Gestion des tâches (CRUD)
+- Authentification basique
+## Lien vers le projet
+- [Voir le projet](https://todo-frontend-gahh.onrender.com/)
