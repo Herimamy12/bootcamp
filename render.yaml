@@ -28,17 +28,18 @@ databases:
 
 services:
   # --------------------------------------------------------------------------
-  # Backend - API Express.js (Web Service Docker)
+  # Backend - API Express.js (Web Service Node.js natif)
   # --------------------------------------------------------------------------
-  # Utilise le Dockerfile existant du backend.
-  # La commande de demarrage execute les migrations Prisma puis lance le serveur.
+  # Render installe les dependances, genere le client Prisma au build,
+  # puis execute les migrations et lance le serveur au demarrage.
   # --------------------------------------------------------------------------
   - type: web
     name: todo-backend
     plan: free
-    env: docker
+    env: node
     rootDir: backend
-    dockerfilePath: ./Dockerfile
+    buildCommand: npm ci --include=dev && npx prisma generate
+    startCommand: npx prisma migrate deploy && npm start
     healthCheckPath: /
     envVars:
       # Connexion a la base de donnees (injectee automatiquement par Render)

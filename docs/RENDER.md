@@ -28,7 +28,7 @@ Ce guide explique comment deployer l'application Todo sur **Render** (base de do
 | Service         | Type          | Description                          |
 |-----------------|---------------|--------------------------------------|
 | `todo-db`       | PostgreSQL    | Base de donnees managee par Render   |
-| `todo-backend`  | Web Service   | API Express.js (Docker)              |
+| `todo-backend`  | Web Service   | API Express.js (Node.js natif)       |
 | `todo-frontend` | Static Site   | Application React buildee par Vite   |
 
 ---
@@ -44,8 +44,9 @@ Render le detecte automatiquement a la racine du repo et propose de creer les se
 databases:
   - name: todo-db        # PostgreSQL manage
 services:
-  - type: web            # Backend (Docker)
+  - type: web            # Backend (Node.js natif)
     name: todo-backend
+    env: node
   - type: web            # Frontend (Static Site)
     name: todo-frontend
     env: static
@@ -136,7 +137,7 @@ Meme principe : les 4 appels `fetch` utilisent maintenant `API_URL` au lieu de `
 
 Render va automatiquement :
 - Creer la base de donnees PostgreSQL
-- Builder et deployer le backend (Docker)
+- Installer les dependances et builder le backend (Node.js)
 - Builder et deployer le frontend (Vite)
 
 Le backend executera `prisma migrate deploy` au demarrage pour creer les tables.
